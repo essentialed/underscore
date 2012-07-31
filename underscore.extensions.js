@@ -1,8 +1,25 @@
 (function(window, _, undefined){
+    function emptyFn(){}
+
+    window.console = (function() {
+        var m = ['log', 'error', 'info', 'warn', 'time', 'timeEnd', 'dir'],
+            c = {}, i = 0, l = m.length;
+
+        if (window.console !== undefined) {
+            return window.console;
+        }
+
+        for (; i < l; i++) {
+            c[m[i]] = emptyFn;
+        }
+
+        return c;
+    })();
+
 
     _.isNumeric = function isNumeric(n) {
         return !isNaN(parseInt(n, 10)) && isFinite(n);
-    }
+    };
 
     _.extend = function extend() {
         /*
@@ -25,7 +42,7 @@
             copy;
 
         for (; i < len; i++) {
-            if ((options = arguments[i]) != null) {
+            if ((options = arguments[i]) !== null) {
                 for (name in options) {
                     src = target[name];
                     copy = options[name];
@@ -45,6 +62,6 @@
         }
 
         return target;
-    }
+    };
 
-})(this, _);
+})(this, this._);
